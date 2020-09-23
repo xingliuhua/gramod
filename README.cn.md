@@ -16,12 +16,16 @@ go mod graph 生成的依赖报告可读性太差，图形化更方便。
 go get github.com/xingliuhua/gramod
 ## 使用
 命令行中使用
+```text
 gramod
 // 生成项目所有依赖图
+```
 ![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg1.png)
 
+```text
 gramod -s github.com/xingliuhua/gramod@v1.0.0
 // 只生成github.com/xingliuhua/gramod@v1.0.0的依赖
+```
 ![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg2.png)
 ## 维护
 

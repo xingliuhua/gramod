@@ -12,12 +12,16 @@ The readability of the go mod graph command line is too poor
 ## Install
 go get github.com/xingliuhua/gramod
 ## Usage
+```text
 gramod
 // Generate all dependent graphics
+```
 ![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg1.png)
 
+```text
 gramod -s github.com/xingliuhua/gramod@v1.0.0
 // Generates the graphics for the specified dependencies
+```
 ![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg2.png)
 
 ## Maintainers
