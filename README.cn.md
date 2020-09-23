@@ -1,76 +1,26 @@
-[English](https://github.com/xingliuhua/leaf/blob/master/README.md)
-# 叶子ID
+[English](https://github.com/xingliuhua/gramod/blob/master/README.md)
+# gramod
 
-一个生成唯一ID的库，采用go语言编写。
-它是雪花ID的变种，生成的唯一的ID更短，采用字符+数字组合。单个节点默认每毫秒最多生成36个ID，每个ID长度为10。
-
-当然你可以根据自己的需求改变，调用node.SetGenerateIDRate()即可。
-
-|每毫秒最多|ID长度|
-|---|---|
-|36（默认）|10|
-|1296|12|
-|46656|13|
-
-相信单个节点每毫秒46656个基本能满足业务需求了。
+这是一个go mod的图形化工具
 
 ## 背景
-
-产品要求生成订单编号：
-
-* 10位长度（不确定，需求随时会变）
-* 字母和数字,字母不区分大小写
-* 单调递增
-* 唯一
-
-很容易想到用雪花ID来实现，但是雪花是数字，而且长度比较长。
-
-受雪花ID启发，对雪花的ID做位数的分辨做点改变:
-```text
-aaaaaaaa -  a  - a...
- 时间戳    节点ID  序列号
-```
-由于是字符加数字组合，那么时间戳是8位可以用89年，而且能指定开始时间。
-
-节点ID 0-35能满足基本需求。
-
-序列号默认是36，也就是一毫秒最多36个订单编号，怕以后不够用，写成了动态，可以自己指定，不过这样最终的
-长度也就会变长。
- 
+go mod graph 生成的依赖报告可读性太差，图形化更方便。
+市面上有类似的开源库，但是一旦依赖比较多，生成的图片密密麻麻，可读性极差，而且不能只查看具体某一子依赖的依赖。
 ## 功能特点
-
-* 比雪花ID更短
-* 比一般的雪花ID实现更灵活，可以指定每毫秒并发量，可以指定开始时间
+* 支持生成项目所有依赖的图形
+* 支持生成指定子依赖的分析图形
+* 线条区分度更大
+* 版本名称适当折行，可读性更佳
 
 ## 安装
-go get github.com/xingliuhua/leaf
+go get github.com/xingliuhua/gramod
 ## 使用
-``` go
-import "github.com/xingliuhua/leaf"
-```
+命令行中使用
+gramod
+// 生成项目所有依赖图
 
-``` go
-    err, node := leaf.NewNode(0)
-	if err != nil {
-		return
-	}
-	err = node.SetGenerateIDRate(200)
-	if err != nil {
-		return
-	}
-	startTime := time.Date(2020, 0, 0, 0, 0, 0, 0, time.UTC).UnixNano() / 1000000
-	err = node.SetSince(startTime)
-	if err != nil {
-		return
-	}
-	for i := 0; i < 40; i++ {
-		err, id := node.NextId()
-		if err != nil {
-			return
-		}
-		fmt.Println(id)
-	}
-```
+gramod -s github.com/xingliuhua/gramod@v1.0.0
+// 只生成github.com/xingliuhua/gramod@v1.0.0的依赖
 
 ## 维护
 

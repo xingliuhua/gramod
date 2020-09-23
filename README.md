@@ -1,7 +1,7 @@
 [中文版](https://github.com/xingliuhua/gramod/blob/master/README.cn.md)
 # gramod
 
-这是一个go mod的图形化工具
+
 This is a graphical tool for go mod
 ## Background
 
