@@ -19,7 +19,7 @@ gramod
 ![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg1.png)
 
 ```text
-gramod -s github.com/xingliuhua/gramod@v1.0.0
+gramod -s github.com/go-playground/validator/v10@v10.3.0
 // Generates the graphics for the specified dependencies
 ```
 ![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg2.png)

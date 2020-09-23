@@ -23,8 +23,8 @@ gramod
 ![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg1.png)
 
 ```text
-gramod -s github.com/xingliuhua/gramod@v1.0.0
-// 只生成github.com/xingliuhua/gramod@v1.0.0的依赖
+gramod -s github.com/go-playground/validator/v10@v10.3.0
+// 只生成github.com/go-playground/validator/v10@v10.3.0的依赖
 ```
 ![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg2.png)
 ## 维护
