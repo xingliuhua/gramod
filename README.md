@@ -14,11 +14,11 @@ go get github.com/xingliuhua/gramod
 ## Usage
 gramod
 // Generate all dependent graphics
-
+![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg1.png)
 
 gramod -s github.com/xingliuhua/gramod@v1.0.0
 // Generates the graphics for the specified dependencies
-
+![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg2.png)
 
 ## Maintainers
 
