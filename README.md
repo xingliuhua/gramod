@@ -10,7 +10,8 @@ The readability of the go mod graph command line is too poor
 * Generate all dependent graphics
 * Generates the graphics for the specified dependencies
 ## Install
-go get github.com/xingliuhua/gramod
+1. install graphviz
+2. go get github.com/xingliuhua/gramod
 ## Usage
 ```text
 gramod

@@ -13,12 +13,14 @@ go mod graph 生成的依赖报告可读性太差，图形化更方便。
 * 版本名称适当折行，可读性更佳
 
 ## 安装
-go get github.com/xingliuhua/gramod
+1. 首先你应该安装graphviz
+
+2. 在非项目目录执行go get github.com/xingliuhua/gramod，会在你的gopath/bin下参数gramod文件，如果你已经把gopath/bin加到path环境变量，那么可以在其他目录随意调用gramod了
 ## 使用
 命令行中使用
 ```text
 gramod
-// 生成项目所有依赖图
+// 在项目根目录执行gramod命令
 ```
 ![](https://github.com/xingliuhua/gramod/blob/master/gramod_eg1.png)
 
