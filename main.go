@@ -16,11 +16,11 @@ const NameMaxLineLen = 20
 
 const help = `go mod graph tool
 usage:
-	gramod [-specialDepend <dependency-name-and-version>]
-eg: gramod -specialDepend github.com/xingliuhua/gramod@v1.0.0
+	gramod [-s <dependency-name-and-version>]
+eg: gramod -s github.com/xingliuhua/gramod@v1.2.0
 `
 
-var specialDepend = flag.String("specialDepend", "", "special dependency name and version,eg: gramod -specialDepend github.com/xingliuhua/gramod@v1.0.0")
+var s = flag.String("s", "", "special dependency name and version,eg: gramod -s github.com/xingliuhua/gramod@v1.0.0")
 
 func main() {
 	flag.Usage = func() {
@@ -55,19 +55,19 @@ func main() {
 		})
 	}
 
-	if specialDepend == nil || *specialDepend == "" {
+	if s == nil || *s == "" {
 		writeDependencyGraph(AllDependencyIdMap, AllDependencyLines)
 	} else {
-		generateSpecialDependency(*specialDepend, AllDependencyLines)
+		generateSpecialDependency(*s, AllDependencyLines)
 	}
 
 }
 
 func generateSpecialDependency(speKey string, dependencySlice []model.DependencyLine) {
-	speDependencies := getSpecialDependencies(speKey, dependencySlice)
+	speDependencys := getSpecialDependencies(speKey, dependencySlice)
 	keyMap := make(map[string]string)
 	i := 0
-	for _, v := range speDependencies {
+	for _, v := range speDependencys {
 		if _, b := keyMap[v.Name]; !b {
 			keyMap[v.Name] = fmt.Sprintf("id%d", i)
 			i++
@@ -77,7 +77,7 @@ func generateSpecialDependency(speKey string, dependencySlice []model.Dependency
 			i++
 		}
 	}
-	writeDependencyGraph(keyMap, speDependencies)
+	writeDependencyGraph(keyMap, speDependencys)
 }
 
 func getSpecialDependencies(speKey string, dependencySlice []model.DependencyLine) []model.DependencyLine {
@@ -119,22 +119,19 @@ func writeDependencyGraph(keyMap map[string]string, dependencySlice []model.Depe
 	for _, k := range keys {
 		v := keyMap[k]
 		k = collapseKey(k)
-		bufferString.WriteString(fmt.Sprintf("%specialDepend [label = \"%specialDepend\" color = gainsboro];\n", v, k))
+		bufferString.WriteString(fmt.Sprintf("%s [label = \"%s\" color = gainsboro];\n", v, k))
 	}
 	for _, dependency := range dependencySlice {
 		nameId := keyMap[dependency.Name]
 		dependencyNameId := keyMap[dependency.DependencyName]
-		bufferString.WriteString(fmt.Sprintf("%specialDepend -> %specialDepend[color=%specialDepend];\n", nameId, dependencyNameId, getLineColor(nameId)))
+		bufferString.WriteString(fmt.Sprintf("%s -> %s[color=%s];\n", nameId, dependencyNameId, getLineColor(nameId)))
 	}
 	bufferString.WriteString("}")
 
-	command := exec.Command("bash", "-c", "echo '"+bufferString.String()+"' | dot -T png -o gramod.png 1>&2")
-	//var out bytes.Buffer
+	command := exec.Command("bash", "-c", "echo '"+bufferString.String()+"' | dot -T png -o gramod.png")
 	var stderr bytes.Buffer
-	//command.Stdout = &out
 	command.Stderr = &stderr
 	err := command.Run()
-	//_, err := command.CombinedOutput()
 	if err != nil {
 		if strings.Contains(stderr.String(), "command not found") {
 			fmt.Println("failed:", "please install graphviz")
