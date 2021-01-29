@@ -12,16 +12,15 @@ import (
 	"strings"
 )
 
-const NAME_MAX_LINE_LEN = 20
+const NameMaxLineLen = 20
 
-const help =
-`go mod graph tool
+const help = `go mod graph tool
 usage:
-	gramod [-s <dependency-name-and-version>]
-eg: gramod -s github.com/xingliuhua/gramod@v1.0.0
+	gramod [-specialDepend <dependency-name-and-version>]
+eg: gramod -specialDepend github.com/xingliuhua/gramod@v1.0.0
 `
 
-var s = flag.String("s", "", "special dependency name and version,eg: gramod -s github.com/xingliuhua/gramod@v1.0.0")
+var specialDepend = flag.String("specialDepend", "", "special dependency name and version,eg: gramod -specialDepend github.com/xingliuhua/gramod@v1.0.0")
 
 func main() {
 	flag.Usage = func() {
@@ -56,19 +55,19 @@ func main() {
 		})
 	}
 
-	if s == nil || *s == "" {
+	if specialDepend == nil || *specialDepend == "" {
 		writeDependencyGraph(AllDependencyIdMap, AllDependencyLines)
 	} else {
-		generateSpecialDependency(*s, AllDependencyLines)
+		generateSpecialDependency(*specialDepend, AllDependencyLines)
 	}
 
 }
 
 func generateSpecialDependency(speKey string, dependencySlice []model.DependencyLine) {
-	speDependencys := getSpecialDependencys(speKey, dependencySlice)
+	speDependencies := getSpecialDependencies(speKey, dependencySlice)
 	keyMap := make(map[string]string)
 	i := 0
-	for _, v := range speDependencys {
+	for _, v := range speDependencies {
 		if _, b := keyMap[v.Name]; !b {
 			keyMap[v.Name] = fmt.Sprintf("id%d", i)
 			i++
@@ -78,10 +77,10 @@ func generateSpecialDependency(speKey string, dependencySlice []model.Dependency
 			i++
 		}
 	}
-	writeDependencyGraph(keyMap, speDependencys)
+	writeDependencyGraph(keyMap, speDependencies)
 }
 
-func getSpecialDependencys(speKey string, dependencySlice []model.DependencyLine) []model.DependencyLine {
+func getSpecialDependencies(speKey string, dependencySlice []model.DependencyLine) []model.DependencyLine {
 	dest := make([]model.DependencyLine, 0)
 	que := make([]string, 0)
 	que = append(que, speKey)
@@ -120,19 +119,29 @@ func writeDependencyGraph(keyMap map[string]string, dependencySlice []model.Depe
 	for _, k := range keys {
 		v := keyMap[k]
 		k = collapseKey(k)
-		bufferString.WriteString(fmt.Sprintf("%s [label = \"%s\" color = gainsboro];\n", v, k))
+		bufferString.WriteString(fmt.Sprintf("%specialDepend [label = \"%specialDepend\" color = gainsboro];\n", v, k))
 	}
 	for _, dependency := range dependencySlice {
 		nameId := keyMap[dependency.Name]
 		dependencyNameId := keyMap[dependency.DependencyName]
-		bufferString.WriteString(fmt.Sprintf("%s -> %s[color=%s];\n", nameId, dependencyNameId, getLineColor(nameId)))
+		bufferString.WriteString(fmt.Sprintf("%specialDepend -> %specialDepend[color=%specialDepend];\n", nameId, dependencyNameId, getLineColor(nameId)))
 	}
 	bufferString.WriteString("}")
 
-	command := exec.Command("bash", "-c", "echo '"+bufferString.String()+"' | dot -T png -o gramod.png")
-	_, err := command.CombinedOutput()
+	command := exec.Command("bash", "-c", "echo '"+bufferString.String()+"' | dot -T png -o gramod.png 1>&2")
+	//var out bytes.Buffer
+	var stderr bytes.Buffer
+	//command.Stdout = &out
+	command.Stderr = &stderr
+	err := command.Run()
+	//_, err := command.CombinedOutput()
 	if err != nil {
-		fmt.Println("failed:", err)
+		if strings.Contains(stderr.String(), "command not found") {
+			fmt.Println("failed:", "please install graphviz")
+			return
+		}
+		fmt.Println("failed:", err.Error(), stderr.String())
+		return
 	}
 	fmt.Println("success! generate a gramod.png file")
 }
@@ -143,13 +152,13 @@ func collapseKey(key string) string {
 	bufferString := bytes.NewBufferString("")
 	spe := ""
 	for i := 0; ; {
-		if i+NAME_MAX_LINE_LEN > len(key) {
+		if i+NameMaxLineLen > len(key) {
 			bufferString.WriteString(spe + key[i:])
 			break
 		}
-		bufferString.WriteString(spe + key[i:i+NAME_MAX_LINE_LEN])
+		bufferString.WriteString(spe + key[i:i+NameMaxLineLen])
 		spe = "\n"
-		i += NAME_MAX_LINE_LEN
+		i += NameMaxLineLen
 	}
 	return bufferString.String()
 }
