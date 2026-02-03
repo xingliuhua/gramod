@@ -23,12 +23,15 @@ to help you understand how your Go modules depend on each other.
 ## image
 
 all:
+
 ![deps_all.png](image/deps_all.png)
 
 sub:
+
 ![deps_sub.png](image/deps_sub.png)
 
 focus:
+
 ![deps_focus.png](image/deps_focus.png)
 
 
