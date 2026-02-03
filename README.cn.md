@@ -7,7 +7,7 @@
 `gramod` 会解析 `go mod graph` 的输出内容，并生成直观、准确的 PNG 依赖图，  
 帮助你更清楚地了解项目中各个 Go 模块之间的依赖关系。
 
----
+
 
 ## ✨ 功能特性
 
@@ -18,14 +18,17 @@
 - **稳定输出**：遍历顺序固定，每次生成的图一致。
 - **纯 Go 渲染**：不需要额外安装系统 Graphviz。
 
----
+
 
 ## 看图
+项目所有依赖：
 ![deps_all.png](image/deps_all.png)
+只看特定的依赖：
 ![deps_sub.png](image/deps_sub.png)
+看某个依赖的上下文：
 ![deps_focus.png](image/deps_focus.png)
 
----
+
 
 ## 🚀 安装方式
 

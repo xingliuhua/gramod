@@ -7,7 +7,7 @@ A lightweight **Go module dependency visualizer**.
 `gramod` parses `go mod graph` output and generates beautiful, accurate PNG graphs  
 to help you understand how your Go modules depend on each other.
 
----
+
 
 ## ✨ Features
 
@@ -18,14 +18,17 @@ to help you understand how your Go modules depend on each other.
 - **Deterministic output** – stable order, the same graph each time.
 - **Pure Go renderer** – no external Graphviz installation required.
 
----
+
 
 ## image
+all:
 ![deps_all.png](image/deps_all.png)
+sub:
 ![deps_sub.png](image/deps_sub.png)
+focus:
 ![deps_focus.png](image/deps_focus.png)
 
----
+
 
 ## 🚀 Installation
 
