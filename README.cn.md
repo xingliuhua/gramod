@@ -21,10 +21,13 @@
 
 
 ## 看图
+
 项目所有依赖：
 ![deps_all.png](image/deps_all.png)
+
 只看特定的依赖：
 ![deps_sub.png](image/deps_sub.png)
+
 看某个依赖的上下文：
 ![deps_focus.png](image/deps_focus.png)
 
