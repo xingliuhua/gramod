@@ -1,1 +1,8 @@
 .idea/
+gramod
+gramod-darwin-amd64
+gramod-darwin-arm64
+gramod-linux-amd64
+gramod-linux-arm64
+gramod-windows-amd64.exe
+
