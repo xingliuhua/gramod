@@ -29,7 +29,7 @@ var colorPalette = []string{
 }
 
 const NODE_LABEL_MAX_LEN = 20
-const version = "2.0"
+const version = "2.0.0"
 
 // Entry point with urfave/cli/v2
 func main() {
