@@ -29,12 +29,14 @@ var colorPalette = []string{
 }
 
 const NODE_LABEL_MAX_LEN = 20
+const version = "2.0"
 
 // Entry point with urfave/cli/v2
 func main() {
 	app := &cli.App{
-		Name:  "gomodviz",
-		Usage: "Generate a visual graph of Go module dependencies",
+		Name:    "gomodviz",
+		Usage:   "Generate a visual graph of Go module dependencies",
+		Version: version,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     "target",
@@ -59,6 +61,17 @@ func main() {
 				Name:    "color",
 				Aliases: []string{"c"},
 				Usage:   "Enable automatic coloring for edges.",
+			},
+		},
+		Commands: []*cli.Command{
+			{
+				Name:    "version",
+				Aliases: []string{"v"},
+				Usage:   "Show gramod version information",
+				Action: func(c *cli.Context) error {
+					fmt.Printf("gramod %s\n", c.App.Version)
+					return nil
+				},
 			},
 		},
 		Action: func(c *cli.Context) error {
