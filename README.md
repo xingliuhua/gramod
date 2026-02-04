@@ -41,7 +41,7 @@ focus:
 ### 🧰 Option 1 – Go developers
 
 ```bash
-go install github.com/xingliuhua/gramod@latest
+go install github.com/xingliuhua/gramod/v2@latest
 ```
 
 > Requires Go 1.18 or newer  

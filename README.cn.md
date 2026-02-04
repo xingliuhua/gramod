@@ -41,7 +41,7 @@
 ### 🧰 方式一：Go 开发者（推荐）
 
 ```bash
-go install github.com/xingliuhua/gramod@latest
+go install github.com/xingliuhua/gramod/v2@latest
 ```
 
 > 需要 Go 1.18 或更高版本
