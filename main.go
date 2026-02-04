@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/xingliuhua/gramod/model"
+	"github.com/xingliuhua/gramod/v2/model"
 	"math/rand"
 	"os"
 	"os/exec"

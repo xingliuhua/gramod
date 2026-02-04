@@ -1,4 +1,4 @@
-module github.com/xingliuhua/gramod
+module github.com/xingliuhua/gramod/v2
 
 go 1.23.0
 
